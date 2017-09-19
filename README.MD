@@ -1,3 +1,5 @@
+The package is still in progress.
+
 # LumenJWT
 
 LumenJWT is an Http guard for Lumen, a Laravel micro framework.
