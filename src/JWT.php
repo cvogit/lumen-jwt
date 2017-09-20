@@ -25,18 +25,6 @@ class JWT
 	private $alg;
 
 	/**
-	* The decoded JWT object
-	*
-	*/
-	private $decoded;
-
-	/**
-	* The JWT
-	*
-	*/
-	private $jwt;
-
-	/**
 	* The key to sign JWT
 	* set in .env file as JWT_KEY
 	* 
@@ -71,9 +59,9 @@ class JWT
 	*/
 	public function create($jti = NULL, $claims = NULL) {
 		
-		$this->jwt = fireJWT::encode($this->payload->create($jti, $claims), $this->key, $this->alg);
+		$jwt = fireJWT::encode($this->payload->create($jti, $claims), $this->key, $this->alg);
 
-		return $this->jwt;
+		return $jwt;
 	}
 
 	/**
@@ -84,9 +72,9 @@ class JWT
 	*/
 	public function decode($jwt) {
 
-		$this->decoded = fireJWT::decode($jwt, $this->key, array($this->alg));
+		$decoded = fireJWT::decode($jwt, $this->key, array($this->alg));
 
-		return (array) $this->decoded;
+		return (array) $decoded;
 	}
 	
 	/**
@@ -97,8 +85,8 @@ class JWT
 	*/
 	public function extract($request) {
 
-		$this->jwt = $this->parser->parse($request);
-
-		return self::decode($this->jwt);
+		$jwt = $this->parser->parse($request);
+		
+		return self::decode($jwt);
 	}
 }

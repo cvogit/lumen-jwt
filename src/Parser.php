@@ -29,8 +29,8 @@ class Parser
 	 * @return mixed
 	 */
 	public function parse($request) {
-
-		// Parse the token if it's send though Http_Authorization in the header
+		
+		// Parse the token if it's send though the header
 		if ($request->header('Authorization')) {
       list($type, $data) = explode(" ", $request->header('Authorization'), 2);
       return $data;

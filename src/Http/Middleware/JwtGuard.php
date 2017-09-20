@@ -22,19 +22,6 @@ class JwtGuard
 	protected $parser;
 
 	/**
-	 * The parser
-	 *
-	 */
-	protected $payload;
-
-	/**
-	 * The parser
-	 *
-	 */
-	protected $token;
-
-
-	/**
 	 * Create a new middleware instance.
 	 *
 	 * @param  
@@ -56,10 +43,10 @@ class JwtGuard
 	public function handle(Request $request, Closure $next)
 	{
 
-		$this->token = $this->parser->parse($request);
-		$this->payload = $this->jwt->decode($this->token);
+		$token = $this->parser->parse($request);
+		$payload = $this->jwt->decode($token);
 
-		if($this->payload["exp"] >= $this->payload["iat"])
+		if($payload["exp"] >= $payload["iat"])
 			return $next($request);
 		
 		abort("Token expired, please log in again.");
