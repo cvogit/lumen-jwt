@@ -21,6 +21,7 @@ class Payload
 	*	Generate payload with registered claims [iss, iat, exp]
 	*
 	* @param var
+	* @param array
 	* @return array
 	*/
 	public function create($jti, $claims) {

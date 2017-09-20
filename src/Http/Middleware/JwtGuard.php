@@ -4,9 +4,10 @@ namespace Cvogit\LumenJWT\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Cvogit\LumenJWT\JWT;
 use Cvogit\LumenJWT\Parser;
 
-class Jwt
+class JwtGuard
 {
 	/**
 	 * The parsed jwt
@@ -19,14 +20,29 @@ class Jwt
 	 *
 	 */
 	protected $parser;
+
+	/**
+	 * The parser
+	 *
+	 */
+	protected $payload;
+
+	/**
+	 * The parser
+	 *
+	 */
+	protected $token;
+
+
 	/**
 	 * Create a new middleware instance.
 	 *
 	 * @param  
 	 * @return void
 	 */
-	public function __construct(Parser $parser)
+	public function __construct(JWT $jwt, Parser $parser)
 	{
+		$this->jwt = $jwt;
 		$this->parser = $parser;
 	}
 
@@ -40,8 +56,13 @@ class Jwt
 	public function handle(Request $request, Closure $next)
 	{
 
-		$this->jwt = $this->parser->parse($request);
-		return $this->jwt;
+		$this->token = $this->parser->parse($request);
+		$this->payload = $this->jwt->decode($this->token);
+
+		if($this->payload["exp"] >= $this->payload["iat"])
+			return $next($request);
+		
+		abort("Token expired, please log in again.");
 	}
 
 }

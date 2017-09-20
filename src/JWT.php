@@ -13,6 +13,7 @@ namespace Cvogit\LumenJWT;
 
 use Firebase\JWT\JWT as fireJWT;
 use Cvogit\LumenJWT\Payload;
+use Cvogit\LumenJWT\Parser;
 
 class JWT
 {
@@ -49,10 +50,18 @@ class JWT
 	*/
 	private $payload;
 
-	public function __construct(Payload $payload) {
+	/**
+	* The parser object
+	* extract JWT from http request
+	* 
+	*/
+	private $parser;
+
+	public function __construct(Payload $payload, Parser $parser) {
 		$this->key = env('JWT_KEY');
 		$this->alg = env('JWT_ALG', 'HS256');
 		$this->payload = $payload;
+		$this->parser = $parser;
 	}
 
 	/**
@@ -75,9 +84,21 @@ class JWT
 	*/
 	public function decode($jwt) {
 
-		$this->decoded = fireJWT::decode($jwt, $this->key, array('HS256'));
+		$this->decoded = fireJWT::decode($jwt, $this->key, array($this->alg));
 
 		return (array) $this->decoded;
 	}
 	
+	/**
+	* Extract the JWT from the request and decode it
+	*
+	* @param \Illuminate\Http\Request  $request
+	* @return array
+	*/
+	public function extract($request) {
+
+		$this->jwt = $this->parser->parse($request);
+
+		return self::decode($this->jwt);
+	}
 }
