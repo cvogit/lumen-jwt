@@ -46,7 +46,11 @@ class JWT
 	private $parser;
 
 	public function __construct(Payload $payload, Parser $parser) {
+		
 		$this->key = env('JWT_KEY');
+		if(is_null($this->key))
+			throw new RuntimeException("JWT_KEY is not set in .env file.");
+
 		$this->alg = env('JWT_ALG', 'HS256');
 		$this->payload = $payload;
 		$this->parser = $parser;
