@@ -41,7 +41,7 @@ class Parser
       return $request->input('token');
 
     else
-    	abort("Request Denied, JWT token not found.", 404);
+    	abort(404, "Request Denied, JWT token not found.");
 
 	}
 

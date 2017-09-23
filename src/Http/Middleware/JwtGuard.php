@@ -49,7 +49,7 @@ class JwtGuard
 		if($payload["exp"] >= $payload["iat"])
 			return $next($request);
 		
-		abort("Token expired, please log in again.");
+		abort(404, "Token expired, please log in again.");
 	}
 
 }
