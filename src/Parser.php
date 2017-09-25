@@ -12,19 +12,20 @@ namespace Cvogit\LumenJWT;
  */
 
 use Illuminate\Http\Request;
+use \RuntimeException;
 
 class Parser 
 {
 
 	public function __construct() 
-	{
-
-	}
+	{}
 
 	/**
-	 * Parse the JWT from teh request
+	 * Parse the JWT from the request
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Illuminate\Http\Request  	$request
+	 *
+	 * @throws RuntimeException 					Provided request does not contains JWT.
 	 * 
 	 * @return mixed
 	 */
@@ -41,8 +42,7 @@ class Parser
       return $request->input('token');
 
     else
-    	abort(404, "Request Denied, JWT token not found.");
+    	throw new RuntimeException("Request Denied, JWT not found.");
 
 	}
-
 }
