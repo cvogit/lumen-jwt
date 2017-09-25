@@ -14,6 +14,7 @@ namespace Cvogit\LumenJWT;
 use Firebase\JWT\JWT as fireJWT;
 use Cvogit\LumenJWT\Payload;
 use Cvogit\LumenJWT\Parser;
+use \Exception;
 
 class JWT
 {
@@ -63,7 +64,11 @@ class JWT
 	*/
 	public function create($jti = NULL, $claims = NULL) {
 		
-		$jwt = fireJWT::encode($this->payload->create($jti, $claims), $this->key, $this->alg);
+		try {
+			$jwt = fireJWT::encode($this->payload->create($jti, $claims), $this->key, $this->alg);
+		} catch(\Exception $e){
+			abort(404, $e->getMessage());
+    }
 
 		return $jwt;
 	}
@@ -76,7 +81,11 @@ class JWT
 	*/
 	public function decode($jwt) {
 
-		$decoded = fireJWT::decode($jwt, $this->key, array($this->alg));
+		try {
+			$decoded = fireJWT::decode($jwt, $this->key, array($this->alg));
+		}	catch(\Exception $e){
+			abort(404, $e->getMessage());
+    }
 
 		return (array) $decoded;
 	}
