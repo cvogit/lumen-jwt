@@ -32,22 +32,23 @@ class Payload
 	*
 	* @return array
 	*/
-	public function create($jti, $claims) {
+	public function create($jti = NULL, $claims = NULL) {
 
 		if($claims != NULL && !is_array($claims))
 			throw new InvalidArgumentException("Provided claims need to be an array.");
 
-		$jwt_exp = env("JWT_EXP", 7200);
+		$jwt_exp = env('JWT_EXP', 7200);
 
 		if(!is_int($jwt_exp))
 			throw new RuntimeException("JWT_EXP is configured incorrectly in .env file.");
 
+		$jwt_iss = env("JWT_ISS", "LumenJWT");
 		$timestamp = time();
 
 		$exp = $timestamp + $jwt_exp;
 
 		$payload = array(
-			"iss" => env('JWT_ISS', 'LumenJWT'),
+			"iss" => $jwt_iss,
 	    "iat" => $timestamp,
 	    "exp" => $exp,
 	    "jti" => $jti 

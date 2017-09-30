@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fe51543342a7a7646ebf6a2d68333a3",
+    "content-hash": "9cd8f8f9a0874eb5ead7d998a4609524",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -717,12 +717,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "e6e7085fbbd2e25f4ca128ac30c1b0d3dd4ef827"
+                "reference": "f29411235cb3b9e157501de8228fd3a56a5ba864"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e6e7085fbbd2e25f4ca128ac30c1b0d3dd4ef827",
-                "reference": "e6e7085fbbd2e25f4ca128ac30c1b0d3dd4ef827",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f29411235cb3b9e157501de8228fd3a56a5ba864",
+                "reference": "f29411235cb3b9e157501de8228fd3a56a5ba864",
                 "shasum": ""
             },
             "require": {
@@ -793,7 +793,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-09-01T08:39:38+00:00"
+            "time": "2017-09-25T07:50:58+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

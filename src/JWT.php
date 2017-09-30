@@ -59,6 +59,10 @@ class JWT
 
 	/**
 	* Create the default JWT
+	*	@param var
+	* @param array
+	*
+	* @throws Exception 	Encode failing throws Exception
 	*
 	* @return JWT 
 	*/
@@ -67,7 +71,7 @@ class JWT
 		try {
 			$jwt = fireJWT::encode($this->payload->create($jti, $claims), $this->key, $this->alg);
 		} catch(\Exception $e){
-			abort(404, $e->getMessage());
+			throw new Exception($e->getMessage());
     }
 
 		return $jwt;
@@ -77,6 +81,9 @@ class JWT
 	* Decode the JWT and obtain the payload
 	*
 	* @param JWT
+	*
+	* @throws Exception 	Decode failing throws Exception
+	*
 	* @return array
 	*/
 	public function decode($jwt) {
@@ -84,7 +91,7 @@ class JWT
 		try {
 			$decoded = fireJWT::decode($jwt, $this->key, array($this->alg));
 		}	catch(\Exception $e){
-			abort(404, $e->getMessage());
+			throw new Exception($e->getMessage());
     }
 
 		return (array) $decoded;
