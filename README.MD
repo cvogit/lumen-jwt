@@ -42,8 +42,6 @@ Please visit the [Wiki](https://github.com/cvogit/lumen-jwt/wiki).
 
 ### Todos
 
- - Write JWT_KEY create command
- - Write phpunit tests
  - Add blacklist option
 
 License
