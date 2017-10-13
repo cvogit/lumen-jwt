@@ -3,6 +3,7 @@
 namespace Cvogit\LumenJWT\Http\Middleware;
 
 use Closure;
+use \Exception;
 use \InvalidArgumentException;
 use \RuntimeException;
 use Illuminate\Http\Request;
