@@ -14,12 +14,14 @@ class JwtGuard
 	/**
 	 * The parsed jwt
 	 *
+	 * @var  \Cvogit\LumenJWT\JWT  $jwt
 	 */
 	protected $jwt;
 
 	/**
 	 * The parser
 	 *
+	 * @var  \Cvogit\LumenJWT\Parser  $parser
 	 */
 	protected $parser;
 
@@ -49,19 +51,16 @@ class JwtGuard
 		try {
 			$token = $this->parser->parse($request);
 		}	catch (RuntimeException $e) {
-			abort(404, $e->getMessage());
+			return response()->json(['message' => $e->getMessage()], 404);
     }
 
 		try {
 			$payload = $this->jwt->decode($token);
-		} catch(InvalidArgumentException $e){
-			abort(404, $e->getMessage());
+		} catch (Exception $e) {
+    	return response()->json(['message' => $e->getMessage()], 404);
     }
 
-		if($payload["exp"] >= $payload["iat"])
-			return $next($request);
-		
-		abort(404, "Token expired, please log in again.");
+		return $next($request);
 	}
 
 }
