@@ -4,6 +4,7 @@ namespace Cvogit\LumenJWT\Http\Middleware;
 
 use Closure;
 use \Exception;
+use \ExpiredException;
 use \InvalidArgumentException;
 use \RuntimeException;
 use Illuminate\Http\Request;
@@ -58,8 +59,10 @@ class JwtGuard
 		try {
 			$payload = $this->jwt->decode($token);
 		} catch (Exception $e) {
+			if ( $e->getMessage() == 'Expired token')
+    		return response()->json(['message' => $e->getMessage()], 401);
     	return response()->json(['message' => $e->getMessage()], 404);
-    }
+    } 
 
 		return $next($request);
 	}
